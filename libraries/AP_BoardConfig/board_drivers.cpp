@@ -354,6 +354,11 @@ void AP_BoardConfig::board_autodetect(void)
         // classic or upgraded Pixhawk1
         state.board_type.set(PX4_BOARD_PIXHAWK);
         DEV_PRINTF("Detected Pixhawk\n");
+    } else if(spi_check_register("mpu9250_ext", MPUREG_WHOAMI, MPU_WHOAMI_MPU9250) &&
+        spi_check_register("mpu9250", MPUREG_WHOAMI, MPU_WHOAMI_MPU9250)) {
+        
+        state.board_type.set(PX4_BOARD_PIXHAWK2);
+        DEV_PRINTF("Detected PIXHAWK2\n");
     } else {
         config_error("Unable to detect board type");
     }
